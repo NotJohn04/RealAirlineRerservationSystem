@@ -1,8 +1,8 @@
 package com.AirlineSystem.app;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
+import javax.swing.*;
 public class BookFlight {
     private String username;
     private String[] flightDetails;

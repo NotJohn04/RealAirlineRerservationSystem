@@ -60,7 +60,7 @@ public class ManageCustomers {
 
         // Set up the button and label area at the bottom
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new GridLayout(2, 1));
+        bottomPanel.setLayout(new GridLayout(3, 1));
 
         selectedUserLabel = new JLabel("Select a user to unlock");
         bottomPanel.add(selectedUserLabel);
@@ -68,6 +68,14 @@ public class ManageCustomers {
         JButton unlockButton = new JButton("Unlock Selected User");
         unlockButton.setEnabled(false); // Disable the button initially
         bottomPanel.add(unlockButton);
+
+        JButton backButton = new JButton("Back");
+
+        bottomPanel.add(backButton);
+        backButton.addActionListener(e -> {
+            frame.dispose();  // Close the frame
+            new AdminScreen();  // Open the main menu
+        });
 
         // Enable the button if a locked user is selected
         table.getSelectionModel().addListSelectionListener(event -> {

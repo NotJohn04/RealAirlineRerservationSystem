@@ -74,10 +74,36 @@ public class CustomerScreenFiltered {
         gbc.gridy = 2;
         frame.add(searchButton, gbc);
 
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.setPreferredSize(BUTTON_SIZE);
+        gbc.gridy= 3;
+        frame.add(logoutButton, gbc);
+
+        JButton backButton = new JButton("Back");
+        backButton.setPreferredSize(BUTTON_SIZE);
+        gbc.gridy= 4;
+        frame.add(backButton, gbc);
+
+
         // Search Button Action Listener
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new SearchFlight(username);
+                frame.dispose();
+            }
+        });
+
+        logoutButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new LandingPage();
+                frame.dispose();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CustomerScreen(username);
+                frame.dispose();
             }
         });
     }

@@ -1,8 +1,8 @@
 package com.AirlineSystem.app;
 
 import java.awt.*;
-import javax.swing.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class EditFlight {
     private String flightNumber;
@@ -166,6 +166,7 @@ public class EditFlight {
         // Create the save and delete buttons
         JButton saveButton = new JButton("Save");
         JButton deleteButton = new JButton("Delete");
+        JButton backButton = new JButton("Back");
 
         // Place the buttons below each other
         gbc.gridx = 0;
@@ -174,6 +175,10 @@ public class EditFlight {
 
         gbc.gridx = 1;
         frame.add(deleteButton, gbc);
+
+        gbc.gridx = 2;
+        gbc.gridy = 12;
+        frame.add(backButton, gbc);
 
         // Make the frame visible
         frame.setVisible(true);
@@ -213,6 +218,14 @@ public class EditFlight {
             public void actionPerformed(ActionEvent e) {
                 FileUtil.deleteFlightDetails(flightNumber);
                 JOptionPane.showMessageDialog(frame, "Flight details deleted successfully!");
+                new ManageFlights();
+                frame.dispose();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 new ManageFlights();
                 frame.dispose();
             }

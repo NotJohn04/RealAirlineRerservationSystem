@@ -1,12 +1,12 @@
 package com.AirlineSystem.app;
 
 import java.awt.Font;
-import javax.swing.*;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
+import javax.swing.*;
 
 public class SearchFlight {
     private JFrame frame;
@@ -94,6 +94,13 @@ public class SearchFlight {
         gbc.weighty = 1; // Push everything to the top
         frame.add(searchButton, gbc);
 
+        JButton backButton = new JButton("Back");
+        backButton.setFont(new Font("MV Boli", Font.BOLD, 15));
+        gbc.gridx = 2;
+        gbc.gridy = 5;
+        gbc.weighty = 1;
+        frame.add(backButton, gbc);
+
         // Set visibility
         frame.setVisible(true);
         searchButton.addActionListener(new ActionListener() {
@@ -112,6 +119,13 @@ public class SearchFlight {
                 System.out.println(Arrays.toString(flights));
                 new CustomerScreenFiltered(username, flights);
                 frame.dispose();
+            }
+        });
+
+        backButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new CustomerScreen(username);
             }
         });
     }

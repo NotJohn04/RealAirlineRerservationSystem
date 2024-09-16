@@ -16,6 +16,7 @@ public class CustomerLogin {
     JPasswordField InputPassword = new JPasswordField(); // Use JPasswordField for password input
     JButton Login = new JButton("Login");
     JButton Register = new JButton("Register");
+    JButton back = new JButton("Back");
 
     CustomerLogin(){
 
@@ -33,6 +34,7 @@ public class CustomerLogin {
         InputPassword.setBounds(200, 150, 200, 30);
         Login.setBounds(150, 200, 100, 30);
         Register.setBounds(270, 200, 100, 30);
+        back.setBounds(350, 30, 100, 30);
 
         f.add(UserName);
         f.add(InputUserName);
@@ -40,6 +42,7 @@ public class CustomerLogin {
         f.add(InputPassword);
         f.add(Login);
         f.add(Register);
+        f.add(back);
         f.setTitle("Login Screen");
         f.setSize(500, 400);
         f.setLayout(null);
@@ -93,6 +96,13 @@ public class CustomerLogin {
 
             public void actionPerformed(ActionEvent e) {
                 new RegisterScreen();
+                f.dispose();
+            }
+        });
+
+        back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new LandingPage();
                 f.dispose();
             }
         });

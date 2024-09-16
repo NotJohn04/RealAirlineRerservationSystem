@@ -15,6 +15,7 @@ public class AdminLogin {
     JTextField InputUserName = new JTextField();
     JPasswordField InputPassword = new JPasswordField(); // Use JPasswordField for password input
     JButton Login = new JButton("Login");
+    JButton Back = new JButton("Back");
 
     AdminLogin(){
 
@@ -31,12 +32,14 @@ public class AdminLogin {
         InputUserName.setBounds(200, 100, 200, 30);
         InputPassword.setBounds(200, 150, 200, 30);
         Login.setBounds(150, 200, 100, 30);
+        Back.setBounds(270, 200, 100, 30);
 
         f.add(UserName);
         f.add(InputUserName);
         f.add(Password);
         f.add(InputPassword);
         f.add(Login);
+        f.add(Back);
         f.setTitle("Login Screen");
         f.setSize(500, 400);
         f.setLayout(null);
@@ -44,6 +47,13 @@ public class AdminLogin {
         f.setVisible(true);
 
         final int[] count = {0};
+
+        Back.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new LandingPage();
+                f.dispose();
+            }
+        });
 
         // Add action listeners to buttons
         Login.addActionListener(new ActionListener() {

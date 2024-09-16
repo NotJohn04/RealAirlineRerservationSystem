@@ -68,15 +68,25 @@ public class ManageFlights {
         frame.add(title, BorderLayout.NORTH);
 
         JButton addFlightButton = new JButton("Add Flight");
+
+
         addFlightButton.addActionListener(e -> {
             new AddFlight();
             frame.dispose();
         });
-        frame.add(addFlightButton, BorderLayout.EAST);
+        // frame.add(addFlightButton, BorderLayout.WEST);
+
+        JButton backButton = new JButton("Back");
+
+        backButton.addActionListener(e -> {
+            frame.dispose();
+            new AdminScreen();
+        });
+    
 
         // Set up the button and label area at the bottom
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new GridLayout(2, 1));
+        bottomPanel.setLayout(new GridLayout(4, 1));
 
         selectedUserLabel = new JLabel("Select a Flight to Edit");
         bottomPanel.add(selectedUserLabel);
@@ -84,6 +94,10 @@ public class ManageFlights {
         JButton EditButton = new JButton("Select Flight to Edit");
         EditButton.setEnabled(true); // Disable the button initially
         bottomPanel.add(EditButton);
+        bottomPanel.add(addFlightButton);
+        bottomPanel.add(backButton);
+
+
 
         // Enable the button if a locked user is selected
         // table.getSelectionModel().addListSelectionListener(event -> {

@@ -76,10 +76,24 @@ public class CustomerScreen {
         gbc.gridy = 2;
         frame.add(searchButton, gbc);
 
+        JButton logoutButton = new JButton("Logout");
+        logoutButton.setPreferredSize(new Dimension(40,25));
+
+        gbc.gridy = 3;
+        frame.add(logoutButton, gbc);
+
         // Search Button Action Listener
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                frame.dispose();
                 new SearchFlight(username);
+            }
+        });
+
+        logoutButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new LandingPage();
             }
         });
     }
@@ -134,6 +148,8 @@ public class CustomerScreen {
                 frame.dispose();
             }
         });
+
+
 
         flightCard.add(flightInfo);
         flightCard.add(Box.createRigidArea(new Dimension(0, 5))); // Add some spacing
