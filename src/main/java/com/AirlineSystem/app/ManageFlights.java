@@ -62,7 +62,7 @@ public class ManageFlights {
         JFrame frame = new JFrame();  // Initialize the frame
         frame.add(scrollPane, BorderLayout.CENTER);  // Add scroll pane containing the table to the frame
 
-        JLabel title = new JLabel("Manage Customers");
+        JLabel title = new JLabel("Manage Flights");
         title.setFont(new Font("Arial", Font.BOLD, 20));
         title.setHorizontalAlignment(SwingConstants.CENTER);
         frame.add(title, BorderLayout.NORTH);

@@ -20,12 +20,12 @@ public class CustomerLogin {
 
     CustomerLogin(){
 
-        MainTitle.setBounds(10, 30, 100, 30);
+        MainTitle.setBounds(10, 30, 200, 30);
         MainTitle.setFont(new Font("Arial", Font.BOLD, 20));
         f.add(MainTitle);
 
-        title.setBounds(200, 30, 100, 30);
-        title.setFont(new Font("Arial", Font.BOLD, 20));
+        title.setBounds(200, 30, 150, 40);
+        title.setFont(new Font("Arial", Font.BOLD, 28));
         f.add(title);
 
         UserName.setBounds(100, 100, 100, 30);
