@@ -1,0 +1,4 @@
+
+wilsontan,FL1234,New York,London,2024-06-15,08:00 AM,B1
+wilsontan,FL9012,Chicago,Miami,2024-06-17,2:00 PM,E2
+wilsontan,FL1234,Tokyo,Kuala Lumpur,2024-09-26,10:30 AM,B1

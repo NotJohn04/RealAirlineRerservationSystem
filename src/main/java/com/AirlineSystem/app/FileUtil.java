@@ -1,13 +1,16 @@
 package com.AirlineSystem.app;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
 
 public class FileUtil {     
     private static final String FILE_PATH = "../../../data/";
@@ -94,15 +97,13 @@ public class FileUtil {
         return false;
     }
 
-    public static boolean addFlightDetails(String flightNumber, String destination, String departure, String departureDate, String departureTime, String arrivalTime, String flightStatus, String flightType, String flightDuration, String seatNumber, String seatClass, String price) {
-        File file = new File(FILE_PATH + "FlightsDetails.txt");
-        try (FileWriter writer = new FileWriter(file, true)) {
-            writer.write(flightNumber + "," + destination + "," + departure + "," + departureDate + "," + departureTime + "," + arrivalTime + "," + flightStatus + "," + flightType + "," + flightDuration + "," + seatNumber + "," + seatClass + "," + price + "\n");
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return false;
+    public static void addFlightDetails(String flightNumber, String departure, String destination, 
+                                    String departureDate, String departureTime, String arrivalTime, 
+                                    String flightDuration, String flightStatus, 
+                                    String economyPrice, String businessPrice, String seatSelections) {
+        String newFlight = String.join(",", flightNumber, departure, destination, departureDate, departureTime, 
+                                   arrivalTime, flightDuration, flightStatus, economyPrice, businessPrice, seatSelections);
+        appendToFile("FlightsDetails.txt", newFlight);
     }
 
     public static boolean deleteFlightDetails(String flightNumber) {
@@ -143,11 +144,11 @@ public class FileUtil {
         // Create a File object with the full path
         File file = new File(FILE_PATH + fileName);
 
-        try (BufferedReader scanner = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String line;
 
             // Read each line of the file and add it to the list
-            while ((line = scanner.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 lines.add(line);  // Add the whole line to the list
             }
         } catch (IOException e) {
@@ -179,7 +180,10 @@ public class FileUtil {
     }
 
 
-    public static void updateFlightDetails(String flightNumber, String destination, String departure, String departureDate, String departureTime, String arrivalTime, String flightStatus, String flightType, String flightDuration, String seatNumber, String seatClass, String price) {
+    public static boolean updateFlightDetails(String flightNumber, String departure, String destination,
+                                              String departureDate, String departureTime, String arrivalTime,
+                                              String flightDuration, String flightStatus,
+                                              String economyPrice, String businessPrice, String seatSelections) {
         File file = new File(FILE_PATH + "FlightsDetails.txt");
         StringBuilder fileContent = new StringBuilder();
         boolean flightFound = false;
@@ -189,27 +193,32 @@ public class FileUtil {
                 String line = scanner.nextLine();
                 String[] details = line.split(",");
                 if (details[0].equals(flightNumber)) {
-                    // Update the line with new details
-                    line = flightNumber + "," + destination + "," + departure + "," + departureDate + "," + departureTime + "," + arrivalTime + "," + flightStatus + "," + flightType + "," + flightDuration + "," + seatNumber + "," + seatClass + "," + price;
+                    // Update the flight details
+                    String updatedFlight = String.join(",", flightNumber, departure, destination, departureDate,
+                            departureTime, arrivalTime, flightDuration, flightStatus, economyPrice, businessPrice, seatSelections);
+                    fileContent.append(updatedFlight).append("\n");
                     flightFound = true;
+                } else {
+                    fileContent.append(line).append("\n");
                 }
-                fileContent.append(line).append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return;
+            return false;
         }
 
         if (flightFound) {
             try (FileWriter writer = new FileWriter(file)) {
                 writer.write(fileContent.toString());
+                return true;
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        } else {
-            System.out.println("Flight not found.");
         }
+
+        return false;
     }
+
 
     public static void updateUserStatus(String[][] data, String fileName) {
         File file = new File(FILE_PATH + fileName);
@@ -240,4 +249,13 @@ public class FileUtil {
         return false;
     }
 
+    public static void appendToFile(String fileName, String content) {
+        try (FileWriter fw = new FileWriter(FILE_PATH + fileName, true);
+             BufferedWriter bw = new BufferedWriter(fw);
+             PrintWriter out = new PrintWriter(bw)) {
+            out.println(content);
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+        }
+    }
 }

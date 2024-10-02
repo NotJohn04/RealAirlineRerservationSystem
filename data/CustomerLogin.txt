@@ -1,6 +1,3 @@
-123,123,unlocked
-enochkok,123256,unlocked
-dingdong,123456,unlocked
-thamkingjoe,H@ppy123,unlocked
-thamkingjoe,oinwa12@,unlocked
 wilsontan,D@ddyW1ll,unlocked
+bananaiwamiwnaonoi,B@nan0123,locked
+hav,iwnaoi1@,unlocked

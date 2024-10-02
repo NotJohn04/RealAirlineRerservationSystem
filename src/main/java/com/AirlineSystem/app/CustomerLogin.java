@@ -85,7 +85,7 @@ public class CustomerLogin {
                     
                     if (count[0] == 3) {
                         FileUtil.lockUser("CustomerLogin.txt", username);
-                        JOptionPane.showMessageDialog(null, "Too many attempts. Please try again later.");
+                        JOptionPane.showMessageDialog(null, "Too many attempts. Please try again later, please contact the admin to unlock your account.");
                         f.dispose();
                     }
                 }

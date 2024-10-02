@@ -112,7 +112,6 @@ public class CustomerScreen {
 
         for (String flight : flightDetails) {
             String[] details = flight.split(",");
-
             JPanel flightCard = createFlightCard(details);
             flightPanel.add(flightCard);
         }
@@ -131,12 +130,11 @@ public class CustomerScreen {
                 + "<br/><b>Date:</b> " + details[3]
                 + "<br/><b>Departure Time:</b> " + details[4]
                 + "<br/><b>Arrival Time:</b> " + details[5]
-                + "<br/><b>Status:</b> " + details[6]
-                + "<br/><b>Flight Type:</b> " + details[7]
-                + "<br/><b>Flight Duration:</b> " + details[8]
-                + "<br/><b>Seat Number:</b> " + details[9]
-                + "<br/><b>Seat Class:</b> " + details[10]
-                + "<br/><b>Price:</b> " + details[11] + "</html>");
+                + "<br/><b>Flight Type:</b> " + details[6]
+                + "<br/><b>Flight Duration:</b> " + details[7]
+                + "<br/><b>Economy Price:</b> " + details[8]
+                + "<br/><b>Business Price:</b> " + details[9]
+                + "</html>");
         flightInfo.setFont(DETAILS_FONT);
 
         // Add Book Button with action
