@@ -180,7 +180,6 @@ public class BookFlight {
     private void goBack() {
         frame.dispose();
         new CustomerScreen(username);
-
     }
     
 }
