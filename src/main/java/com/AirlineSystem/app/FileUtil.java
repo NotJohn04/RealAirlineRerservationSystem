@@ -97,6 +97,16 @@ public class FileUtil {
         return false;
     }
 
+    public static void writeFile(String fileName, String content) {
+        File file = new File(FILE_PATH + fileName);
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+            writer.write(content);
+        } catch (IOException e) {
+            System.err.println("Error writing to file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public static void addFlightDetails(String flightNumber, String departure, String destination, 
                                     String departureDate, String departureTime, String arrivalTime, 
                                     String flightDuration, String flightStatus, 
