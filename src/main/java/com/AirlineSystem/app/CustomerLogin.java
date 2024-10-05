@@ -60,7 +60,7 @@ public class CustomerLogin {
                 String password = new String(InputPassword.getPassword());
 
                 if (FileUtil.checkLocked("CustomerLogin.txt", username)) {
-                    JOptionPane.showMessageDialog(null, "User is locked, please try again later.");
+                    JOptionPane.showMessageDialog(null, "User is locked, please contact the admin to unlock your account.");
                     f.dispose();
                     return;
                 }
@@ -85,7 +85,7 @@ public class CustomerLogin {
                     
                     if (count[0] == 3) {
                         FileUtil.lockUser("CustomerLogin.txt", username);
-                        JOptionPane.showMessageDialog(null, "Too many attempts. Please try again later, please contact the admin to unlock your account.");
+                        JOptionPane.showMessageDialog(null, "Too many attempts. Please contact the admin to unlock your account.");
                         f.dispose();
                     }
                 }

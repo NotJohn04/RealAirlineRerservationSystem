@@ -76,10 +76,15 @@ public class CustomerScreen {
         gbc.gridy = 2;
         frame.add(searchButton, gbc);
 
+        JButton viewBookingButton = new JButton("View Booking");
+        viewBookingButton.setPreferredSize(BUTTON_SIZE);
+        gbc.gridy = 3;
+        frame.add(viewBookingButton, gbc);
+
         JButton logoutButton = new JButton("Logout");
         logoutButton.setPreferredSize(new Dimension(40,25));
 
-        gbc.gridy = 3;
+        gbc.gridy = 4;
         frame.add(logoutButton, gbc);
 
         // Search Button Action Listener
@@ -87,6 +92,13 @@ public class CustomerScreen {
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
                 new SearchFlight(username);
+            }
+        });
+
+        viewBookingButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new Receipt(username);
             }
         });
 

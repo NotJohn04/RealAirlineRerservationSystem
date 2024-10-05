@@ -74,14 +74,19 @@ public class CustomerScreenFiltered {
         gbc.gridy = 2;
         frame.add(searchButton, gbc);
 
+        JButton viewBookingButton = new JButton("View Booking");
+        viewBookingButton.setPreferredSize(BUTTON_SIZE);
+        gbc.gridy = 3;
+        frame.add(viewBookingButton, gbc);
+
         JButton logoutButton = new JButton("Logout");
         logoutButton.setPreferredSize(BUTTON_SIZE);
-        gbc.gridy= 3;
+        gbc.gridy= 4;
         frame.add(logoutButton, gbc);
 
         JButton backButton = new JButton("Back");
         backButton.setPreferredSize(BUTTON_SIZE);
-        gbc.gridy= 4;
+        gbc.gridy= 5;
         frame.add(backButton, gbc);
 
 
@@ -89,6 +94,13 @@ public class CustomerScreenFiltered {
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new SearchFlight(username);
+                frame.dispose();
+            }   
+        });
+
+        viewBookingButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new Receipt(username);
                 frame.dispose();
             }
         });
@@ -134,19 +146,18 @@ public class CustomerScreenFiltered {
         flightCard.setBorder(BorderFactory.createLineBorder(Color.GRAY)); // Add border around the card
         flightCard.setLayout(new BoxLayout(flightCard, BoxLayout.Y_AXIS)); // Stack components vertically
 
-        // Add flight details using HTML for formatted text
+        // Update the flight details to match CustomerScreen
         JLabel flightInfo = new JLabel("<html><b>Flight Number:</b> " + details[0]
                 + "<br/><b>Departure:</b> " + details[1]
                 + "<br/><b>Destination:</b> " + details[2]
                 + "<br/><b>Date:</b> " + details[3]
                 + "<br/><b>Departure Time:</b> " + details[4]
                 + "<br/><b>Arrival Time:</b> " + details[5]
-                + "<br/><b>Status:</b> " + details[6]
-                + "<br/><b>Flight Type:</b> " + details[7]
-                + "<br/><b>Flight Duration:</b> " + details[8]
-                + "<br/><b>Seat Number:</b> " + details[9]
-                + "<br/><b>Seat Class:</b> " + details[10]
-                + "<br/><b>Price:</b> " + details[11] + "</html>");
+                + "<br/><b>Flight Type:</b> " + details[6]
+                + "<br/><b>Flight Duration:</b> " + details[7]
+                + "<br/><b>Economy Price:</b> " + details[8]
+                + "<br/><b>Business Price:</b> " + details[9]
+                + "</html>");
         flightInfo.setFont(DETAILS_FONT);
 
         // Add Book Button with action

@@ -50,31 +50,32 @@ public class SearchFlight {
         gbc.gridy = 1;
         frame.add(flightDetailsLabel, gbc);
 
-        // Departure label and text field
-        JLabel departureLabel = new JLabel("Departure:");
-        departureLabel.setFont(new Font("MV Boli", Font.BOLD, 15));
+        // From Country label and text field
+        JLabel fromCountryLabel = new JLabel("From Country:");
+        fromCountryLabel.setFont(new Font("MV Boli", Font.BOLD, 15));
+        gbc.gridx = 0;
         gbc.gridy = 2;
-        frame.add(departureLabel, gbc);
+        frame.add(fromCountryLabel, gbc);
 
-        JTextField departureTextField = new JTextField(10);
-        departureTextField.setFont(new Font("MV Boli", Font.PLAIN, 15));
+        JTextField fromCountryTextField = new JTextField(10);
+        fromCountryTextField.setFont(new Font("MV Boli", Font.PLAIN, 15));
         gbc.gridx = 1;
-        frame.add(departureTextField, gbc);
+        frame.add(fromCountryTextField, gbc);
 
-        // Destination label and text field
-        JLabel destinationLabel = new JLabel("Destination:");
-        destinationLabel.setFont(new Font("MV Boli", Font.BOLD, 15));
+        // To Country label and text field
+        JLabel toCountryLabel = new JLabel("To Country:");
+        toCountryLabel.setFont(new Font("MV Boli", Font.BOLD, 15));
         gbc.gridx = 0;
         gbc.gridy = 3;
-        frame.add(destinationLabel, gbc);
+        frame.add(toCountryLabel, gbc);
 
-        JTextField destinationTextField = new JTextField(10);
-        destinationTextField.setFont(new Font("MV Boli", Font.PLAIN, 15));
+        JTextField toCountryTextField = new JTextField(10);
+        toCountryTextField.setFont(new Font("MV Boli", Font.PLAIN, 15));
         gbc.gridx = 1;
-        frame.add(destinationTextField, gbc);
+        frame.add(toCountryTextField, gbc);
 
-        // Date label and text field
-        JLabel dateLabel = new JLabel("Date:");
+        // Date label
+        JLabel dateLabel = new JLabel("Date (YYYY-MM-DD, e.g., 2024-09-25):");
         dateLabel.setFont(new Font("MV Boli", Font.BOLD, 15));
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -85,40 +86,80 @@ public class SearchFlight {
         gbc.gridx = 1;
         frame.add(dateTextField, gbc);
 
+        // From Time label
+        JLabel fromTimeLabel = new JLabel("From Time (hh:mm AM/PM, e.g., 10:30 AM):");
+        fromTimeLabel.setFont(new Font("MV Boli", Font.BOLD, 15));
+        gbc.gridx = 0;
+        gbc.gridy = 5;
+        frame.add(fromTimeLabel, gbc);
+
+        JTextField fromTimeTextField = new JTextField(10);
+        fromTimeTextField.setFont(new Font("MV Boli", Font.PLAIN, 15));
+        gbc.gridx = 1;
+        frame.add(fromTimeTextField, gbc);
+
+        // To Time label
+        JLabel toTimeLabel = new JLabel("To Time (hh:mm AM/PM, e.g., 06:30 PM):");
+        toTimeLabel.setFont(new Font("MV Boli", Font.BOLD, 15));
+        gbc.gridx = 0;
+        gbc.gridy = 6;
+        frame.add(toTimeLabel, gbc);
+
+        JTextField toTimeTextField = new JTextField(10);
+        toTimeTextField.setFont(new Font("MV Boli", Font.PLAIN, 15));
+        gbc.gridx = 1;
+        frame.add(toTimeTextField, gbc);
+
+        // Domestic/International options
+        JLabel typeLabel = new JLabel("Flight Type:");
+        typeLabel.setFont(new Font("MV Boli", Font.BOLD, 15));
+        gbc.gridx = 0;
+        gbc.gridy = 7;
+        frame.add(typeLabel, gbc);
+
+        String[] flightTypes = {"Any", "Domestic", "International"};
+        JComboBox<String> flightTypeComboBox = new JComboBox<>(flightTypes);
+        flightTypeComboBox.setFont(new Font("MV Boli", Font.PLAIN, 15));
+        gbc.gridx = 1;
+        frame.add(flightTypeComboBox, gbc);
+
         // Search button
         JButton searchButton = new JButton("Search");
         searchButton.setFont(new Font("MV Boli", Font.BOLD, 15));
         gbc.gridx = 0;
-        gbc.gridy = 5;
-        gbc.gridwidth = 2; // Make the button span two columns
-        gbc.weighty = 1; // Push everything to the top
+        gbc.gridy = 8;
+        gbc.gridwidth = 2;
+        gbc.weighty = 1;
         frame.add(searchButton, gbc);
 
+        // Back button
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("MV Boli", Font.BOLD, 15));
         gbc.gridx = 2;
-        gbc.gridy = 5;
-        gbc.weighty = 1;
+        gbc.gridy = 8;
+        gbc.gridwidth = 1;
         frame.add(backButton, gbc);
 
         // Set visibility
         frame.setVisible(true);
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String departure = departureTextField.getText();
-                String destination = destinationTextField.getText();
-                String date = dateTextField.getText();
-                // Add your search logic here
-                System.out.println("Departure: " + departure);
-                System.out.println("Destination: " + destination);
-                System.out.println("Date: " + date);
+                String fromCountry = fromCountryTextField.getText().trim();
+                String toCountry = toCountryTextField.getText().trim();
+                String date = dateTextField.getText().trim();
+                String fromTime = fromTimeTextField.getText().trim();
+                String toTime = toTimeTextField.getText().trim();
+                String flightType = (String) flightTypeComboBox.getSelectedItem();
 
                 // Search for flights using FileUtil
-                String[] flights = FileUtil.searchFlights(departure, destination, date);
-                // Display flights
-                System.out.println(Arrays.toString(flights));
-                new CustomerScreenFiltered(username, flights);
-                frame.dispose();
+                String[] flights = FileUtil.searchFlights(fromCountry, toCountry, date, fromTime, toTime, flightType);
+
+                if (flights.length > 0) {
+                    new CustomerScreenFiltered(username, flights);
+                    frame.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(frame, "No flights found matching your criteria.", "No Results", JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 

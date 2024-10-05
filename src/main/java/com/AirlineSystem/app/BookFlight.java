@@ -13,6 +13,7 @@ public class BookFlight {
     private JButton confirmButton;
     private JButton backButton;
     private JFrame frame;
+    private Color VERY_LIGHT_BLUE = new Color(144, 224, 239);
 
     public BookFlight(String username, String[] flightDetails) {
         this.username = username;
@@ -23,7 +24,7 @@ public class BookFlight {
 
     private void initializeFrame() {
         frame = new JFrame();
-        frame.setSize(800, 600);
+        frame.setSize(800, 800);
         frame.setTitle("Book Flight");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new GridBagLayout());
@@ -37,12 +38,29 @@ public class BookFlight {
 
     private void displayFlightDetails(JFrame frame) {
         JLabel flightDetailsLabel = new JLabel("Flight Details");
+
         flightDetailsLabel.setFont(TITLE_FONT);
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridwidth = 2;
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(20, 10, 10, 10);  // Increased top padding
         frame.add(flightDetailsLabel, gbc);
+
+        JLabel redButtonText = new JLabel("if the buttons are red, it means the seat is taken");
+        redButtonText.setFont(NORMAL_FONT);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.insets = new Insets(10, 10, 5, 10);
+        frame.add(redButtonText, gbc);
+
+        JLabel blueButtonText = new JLabel("if the buttons are blue, it means its a window seat");
+        blueButtonText.setFont(NORMAL_FONT);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        gbc.insets = new Insets(5, 10, 20, 10);  // Increased bottom padding
+        frame.add(blueButtonText, gbc);
         // System.out.println(
         //     flightDetails[0] + " " + flightDetails[1] + " " + flightDetails[2] + " " + flightDetails[3] + " " + flightDetails[4] + " " + flightDetails[5] + " " + flightDetails[6] + " " + flightDetails[7] + " " + flightDetails[8] + " " + flightDetails[9] 
         
@@ -51,7 +69,7 @@ public class BookFlight {
         String[] labels = {"Flight Number", "Departure", "Arrival", "Date", "Time"};
         for (int i = 0; i < labels.length; i++) {
             gbc.gridx = 0;
-            gbc.gridy = i + 1;
+            gbc.gridy = i + 3;  // Start from 3 instead of 1
             gbc.gridwidth = 1;
             gbc.anchor = GridBagConstraints.EAST;
             frame.add(new JLabel(labels[i] + ":"), gbc);
@@ -79,27 +97,27 @@ public class BookFlight {
         }
 
         gbc.gridx = 0;
-        gbc.gridy = 6;
+        gbc.gridy = 8;  // Increased from 6
         gbc.gridwidth = 2;
         gbc.insets = new Insets(20, 10, 5, 10);
         frame.add(new JLabel("Business Class Seats:"), gbc);
 
-        gbc.gridy = 7;
+        gbc.gridy = 9;  // Increased from 7
         gbc.insets = new Insets(5, 10, 20, 10);
         frame.add(businessPanel, gbc);
 
-        gbc.gridy = 8;
+        gbc.gridy = 10;  // Increased from 8
         gbc.insets = new Insets(20, 10, 5, 10);
         frame.add(new JLabel("Economy Class Seats:"), gbc);
 
-        gbc.gridy = 9;
+        gbc.gridy = 11;  // Increased from 9
         gbc.insets = new Insets(5, 10, 20, 10);
         frame.add(economyPanel, gbc);
 
         confirmButton = new JButton("Confirm Booking");
         confirmButton.setEnabled(false);
         confirmButton.addActionListener(e -> confirmBooking());
-        gbc.gridy = 10;
+        gbc.gridy = 12;  // Increased from 10
         gbc.insets = new Insets(20, 10, 10, 10);
         frame.add(confirmButton, gbc);
     }
@@ -107,7 +125,10 @@ public class BookFlight {
     private JButton createSeatButton(String seatNumber, String seatClass, int availability) {
         JButton button = new JButton(seatNumber);
         button.addActionListener(e -> handleSeatSelection((JButton) e.getSource(), seatNumber, seatClass));
-        
+
+        if (seatNumber.equals("B1") || seatNumber.equals("B5") || seatNumber.equals("E1") || seatNumber.equals("E5")) {
+            button.setBackground(VERY_LIGHT_BLUE);
+        }
         if (availability == 0) {
             button.setEnabled(false);
             button.setBackground(Color.RED);
@@ -171,9 +192,9 @@ public class BookFlight {
         backButton = new JButton("Back");
         backButton.addActionListener(e -> goBack());
         gbc.gridx = 0;
-        gbc.gridy = 11;
+        gbc.gridy = 13;  // Increased from 11
         gbc.gridwidth = 2;
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(10, 10, 20, 10);  // Increased bottom padding
         frame.add(backButton, gbc);
     }
 

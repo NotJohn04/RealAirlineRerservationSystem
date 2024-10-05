@@ -11,7 +11,10 @@ public class AdminScreen {
     JLabel title = new JLabel("Admin Screen");
     JButton manageFlights = new JButton("Manage Flights");
     JButton manageCustomers = new JButton("Manage Customers");
+    JButton registerAdmin = new JButton("Register Admin");
+    JButton manageAdminButton = new JButton("Manage Admin");
     JButton LogoutButton = new JButton("Logout");
+    JButton manageRefundsButton = new JButton("Manage Refunds");
 
     
 
@@ -24,12 +27,17 @@ public class AdminScreen {
 
         manageFlights.setBounds(100, 100, 200, 30);
         manageCustomers.setBounds(100, 150, 200, 30);
-        LogoutButton.setBounds(100, 200, 200, 30);
-
+        registerAdmin.setBounds(100, 200, 200, 30);
+        manageAdminButton.setBounds(100, 250, 200, 30);
+        LogoutButton.setBounds(100, 300, 200, 30);
+        manageRefundsButton.setBounds(100, 350, 200, 30);
         frame.add(manageFlights);
         frame.add(manageCustomers);
+        frame.add(manageAdminButton);
         frame.add(LogoutButton);
         frame.add(title);
+        frame.add(registerAdmin);
+        frame.add(manageRefundsButton);
         frame.setSize(420, 420);
         frame.setTitle("Admin Screen");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,9 +60,32 @@ public class AdminScreen {
             }
         });
 
+
+
         LogoutButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new LandingPage();
+                frame.dispose();
+            }
+        });
+
+        registerAdmin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new RegisterAdmin();
+                frame.dispose();
+            }
+        });
+
+        manageAdminButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new ManageAdmin();
+                frame.dispose();
+            }
+        });
+
+        manageRefundsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new ManageRefunds();
                 frame.dispose();
             }
         });

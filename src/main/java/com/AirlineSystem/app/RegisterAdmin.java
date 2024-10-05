@@ -4,18 +4,18 @@ import java.awt.Font;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class RegisterScreen {
+public class RegisterAdmin {
 
     JFrame frame = new JFrame();
-    JLabel title = new JLabel("Register");
+    JLabel title = new JLabel("Register Admin");
     JLabel username = new JLabel("Username");
     JLabel password = new JLabel("Password");
     JTextField usernameInput = new JTextField();
     JTextField passwordInput = new JTextField();
-    JButton registerButton = new JButton("Register");
-    JButton loginButton = new JButton("Login");
+    JButton registerButton = new JButton("Register Admin");
+    JButton backButton = new JButton("Back");
 
-    RegisterScreen(){
+    RegisterAdmin(){
 
         title.setBounds(20, 10, 200, 30); // Adjusted title position and width
         title.setFont(new Font("Arial", Font.BOLD, 20));
@@ -36,10 +36,10 @@ public class RegisterScreen {
         registerButton.setBounds(130, 130, 100, 30); // Adjusted register button position
         frame.add(registerButton);
 
-        loginButton.setBounds(240, 130, 100, 30); // Adjusted login button position
-        frame.add(loginButton);
+        backButton.setBounds(240, 130, 100, 30); // Adjusted back button position
+        frame.add(backButton);
 
-        frame.setTitle("Register Screen");
+        frame.setTitle("Admin Register Screen");
         frame.add(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(500,500);
@@ -61,9 +61,9 @@ public class RegisterScreen {
                 } 
                 else {
 
-                    if (FileUtil.saveUser("CustomerLogin.txt", username, password)) {
+                    if (FileUtil.saveUser("AdminLogin.txt", username, password)) {
                         JOptionPane.showMessageDialog(null, "Registration Successful");
-                        new CustomerLogin();  // Go back to the login screen
+                        new AdminScreen();  // Go back to the login screen
                         frame.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "Registration Failed");
@@ -73,15 +73,15 @@ public class RegisterScreen {
             }
         });
 
-        loginButton.addActionListener(new ActionListener() {
+        backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CustomerLogin();
+                new AdminScreen();
                 frame.dispose();
             }
         });
     }
 
     public static void main(String[] args) {
-        new RegisterScreen();
+        new RegisterAdmin();
     }
 }

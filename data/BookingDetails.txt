@@ -1,2 +1,0 @@
-kokkokkok,FL1235,Kuala Lumpur,Sabah,2024-05-06,01:23 PM,E3
-wilsontan,FL1235,Kuala Lumpur,Sabah,2024-05-06,01:23 PM,B4
