@@ -1,2 +1,2 @@
-FL1235,Kuala Lumpur,Sabah,2024-05-06,01:23 PM,09:30 PM,Domestic,8 hours,800,1000,1,1,1,1,1,1,1,1,1,1
-FL1234,Kuala Lumpur,Tokyo,2024-05-07,10:30 AM,11:30 PM,International,11 hours,2400,1800,1,1,1,1,1,1,1,1,1,1
+FL1235,Kuala Lumpur,Sabah,2024-05-06,01:23 PM,09:30 PM,Domestic,8 hours,800,1000,1,1,1,1,1,1,1,1,1,0
+FL1234,Kuala Lumpur,Tokyo,2024-05-07,10:30 AM,11:30 PM,International,11 hours,1800,2400,1,1,1,1,1,1,1,1,1,1
