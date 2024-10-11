@@ -1,10 +1,6 @@
 package com.AirlineSystem.app;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.Scanner;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,24 +11,58 @@ public class ManageRefunds {
 
     public ManageRefunds() {
         frame = new JFrame("Manage Refunds");
-        frame.setSize(800, 600);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        // Set pink background theme for the frame
+        frame.getContentPane().setBackground(new Color(0xF8BBD0));  // Pink background color
         frame.setLayout(new BorderLayout());
 
+        // Title setup
+        JLabel title = new JLabel("Manage Refunds");
+        title.setFont(new Font("Arial", Font.BOLD, 30));
+        title.setForeground(new Color(0xe91e63));  // Pink color for title text
+        title.setHorizontalAlignment(SwingConstants.CENTER);
+        frame.add(title, BorderLayout.NORTH);
+
+        // Table setup
         model = new DefaultTableModel(new String[]{"Username", "Flight ID", "Destination", "Date", "Time", "Price", "Card Number", "Expiry Date", "Seat", "Status"}, 0);
         table = new JTable(model);
         JScrollPane scrollPane = new JScrollPane(table);
+        table.setFillsViewportHeight(true); // Fills the viewport for better visibility
         frame.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel buttonPanel = new JPanel();
+        // Button panel setup
+        JPanel buttonPanel = new JPanel(new GridBagLayout()); // Use GridBagLayout to center buttons
+        buttonPanel.setBackground(new Color(0xF8BBD0));  // Pink background
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);  // Add padding around the buttons
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+
         JButton approveButton = new JButton("Approve Refund");
+        approveButton.setBackground(new Color(0xe91e63));  // Pink button background
+        approveButton.setForeground(Color.WHITE);  // White text
+        approveButton.setOpaque(true);
+        approveButton.setBorderPainted(false);
+        approveButton.setFont(new Font("Arial", Font.BOLD, 16));  // Bold font for buttons
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        buttonPanel.add(approveButton, gbc);
+
         JButton backButton = new JButton("Back");
-        buttonPanel.add(approveButton);
-        buttonPanel.add(backButton);
+        backButton.setBackground(new Color(0xe91e63));  // Pink button background
+        backButton.setForeground(Color.WHITE);
+        backButton.setOpaque(true);
+        backButton.setBorderPainted(false);
+        backButton.setFont(new Font("Arial", Font.BOLD, 16));
+        gbc.gridx = 1;
+        buttonPanel.add(backButton, gbc);
+
         frame.add(buttonPanel, BorderLayout.SOUTH);
 
+        // Load pending refunds from file
         loadPendingRefunds();
 
+        // Approve Refund button action
         approveButton.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
             if (selectedRow != -1) {
@@ -46,7 +76,6 @@ public class ManageRefunds {
                 String expiryDate = (String) model.getValueAt(selectedRow, 7);
                 String seat = (String) model.getValueAt(selectedRow, 8);
                 FileUtil.processRefund(username, flightId, destination, date, time, price, cardNumber, expiryDate, seat);
-                // FileUtil.updateSeatAvailability(flightId, seat);
                 model.removeRow(selectedRow);
                 JOptionPane.showMessageDialog(frame, "Refund approved and processed.");
             } else {
@@ -54,14 +83,20 @@ public class ManageRefunds {
             }
         });
 
+        // Back button action
         backButton.addActionListener(e -> {
             new AdminScreen();
             frame.dispose();
         });
 
+        // Frame setup
+        frame.setSize(800, 600);
+        frame.setLocationRelativeTo(null);  // Center the frame
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 
+    // Load pending refunds from the BookingDetails.txt file
     private void loadPendingRefunds() {
         String[] bookings = FileUtil.readFile("BookingDetails.txt");
         for (String booking : bookings) {
@@ -72,73 +107,5 @@ public class ManageRefunds {
         }
     }
 
-    public static void updateSeatAvailability(String flightNumber, String seatNumber) {
-        String FILE_PATH = "../../../data/";
-        File file = new File(FILE_PATH + "FlightsDetails.txt");
-        StringBuilder fileContent = new StringBuilder();
-        boolean flightFound = false;
 
-        try (Scanner scanner = new Scanner(file)) {
-            while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
-                String[] flightDetails = line.split(",");
-                
-                // Check if this is the correct flight
-                if (flightDetails[0].equals(flightNumber)) {
-                    flightFound = true;
-                    String[] seatSelections = flightDetails[10].split(","); // Seat availability stored in 11th field
-
-                    int seatIndex = getSeatIndex(seatNumber); // Get index of the seat
-                    if (seatIndex != -1 && seatIndex < seatSelections.length) {
-                        seatSelections[seatIndex] = "1"; // Mark seat as available (from "0" to "1")
-                        flightDetails[10] = String.join(",", seatSelections); // Update seat info in flight details
-                    }
-                    line = String.join(",", flightDetails); // Rebuild the flight record
-                }
-                fileContent.append(line).append("\n"); // Append to content
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-
-        // Step 3: Rewrite the FlightsDetails.txt file with updated seat availability
-        if (flightFound) {
-            try (FileWriter writer = new FileWriter(file)) {
-                writer.write(fileContent.toString());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("Flight not found.");
-        }
-    }
-
-    public static int getSeatIndex(String seatNumber) {
-        if (seatNumber == null || seatNumber.isEmpty()) {
-            System.err.println("Error: Empty or null seat number");
-            return -1;
-        }
-
-        char seatClass = seatNumber.charAt(0); // First character is seat class (B or E)
-        int seatNum;
-
-        try {
-            seatNum = Integer.parseInt(seatNumber.substring(1)); // Convert the rest into the seat number
-        } catch (NumberFormatException e) {
-            System.err.println("Error parsing seat number: " + seatNumber);
-            return -1;
-        }
-
-        // Determine seat index based on seat class (business or economy)
-        switch (seatClass) {
-            case 'B': // Business class seats (B1 to B5)
-                return seatNum - 1; // Index for business starts at 0
-            case 'E': // Economy class seats (E1 to E5)
-                return 5 + (seatNum - 1); // Index for economy starts at 5
-            default:
-                System.err.println("Invalid seat class: " + seatClass);
-                return -1;
-        }
-    }       
 }

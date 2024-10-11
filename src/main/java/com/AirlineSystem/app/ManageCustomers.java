@@ -6,24 +6,23 @@ import javax.swing.*;
 public class ManageCustomers {
 
     private String[][] data;
-    private JLabel selectedUserLabel; // To display the selected user for unlocking
+    private JLabel selectedUserLabel;
 
     public ManageCustomers() {
         // Step 1: Read all lines from the file into a String array
         String[] d = FileUtil.readFile("CustomerLogin.txt");
 
         // Step 2: Create a 2D array to hold the table data (username, password, status)
-        data = new String[d.length][3];  // Each row has 3 columns (username, password, status)
+        data = new String[d.length][3];  
 
-        // Step 3: Process each line, split it by commas, and store in the data array
         for (int i = 0; i < d.length; i++) {
-            String line = d[i].trim();  // Remove trailing spaces or newline characters
-            String[] tokens = line.split(",", 3);  // Split the string into 3 parts
+            String line = d[i].trim();  
+            String[] tokens = line.split(",", 3);  
 
             if (tokens.length == 3) {
-                data[i][0] = tokens[0].trim();  // Username
-                data[i][1] = tokens[1].trim();  // Password
-                data[i][2] = tokens[2].trim();  // Status
+                data[i][0] = tokens[0].trim();  
+                data[i][1] = tokens[1].trim();  
+                data[i][2] = tokens[2].trim();  
             } else {
                 System.err.println("Invalid data format at line " + (i + 1) + ": " + d[i]);
             }
@@ -41,64 +40,67 @@ public class ManageCustomers {
                 int selectedRow = table.getSelectedRow();
                 String selectedUser = data[selectedRow][0];
                 String status = data[selectedRow][2];
-                
-                // Display the selected user and enable unlocking if locked
+
                 selectedUserLabel.setText("Selected User: " + selectedUser + " (Status: " + status + ")");
             }
         });
 
         JScrollPane scrollPane = new JScrollPane(table);
 
-        // Step 7: Set up the frame
-        JFrame frame = new JFrame();  // Initialize the frame
-        frame.add(scrollPane, BorderLayout.CENTER);  // Add scroll pane containing the table to the frame
+        // Step 7: Set up the frame with the pink color theme
+        JFrame frame = new JFrame();  
+        frame.getContentPane().setBackground(new Color(0xF8BBD0));  // Pink background
 
+        // Title section
         JLabel title = new JLabel("Manage Customers");
-        title.setFont(new Font("Arial", Font.BOLD, 20));
+        title.setFont(new Font("Arial", Font.BOLD, 30));
+        title.setForeground(new Color(0xe91e63)); 
         title.setHorizontalAlignment(SwingConstants.CENTER);
         frame.add(title, BorderLayout.NORTH);
 
-        // Set up the button and label area at the bottom
+        frame.add(scrollPane, BorderLayout.CENTER);
+
+        // Bottom panel
         JPanel bottomPanel = new JPanel();
+        bottomPanel.setBackground(new Color(0xF8BBD0));
         bottomPanel.setLayout(new GridLayout(3, 1));
 
         selectedUserLabel = new JLabel("Select a user to unlock");
         bottomPanel.add(selectedUserLabel);
 
         JButton unlockButton = new JButton("Unlock Selected User");
-        unlockButton.setEnabled(false); // Disable the button initially
+        unlockButton.setEnabled(false);  
         bottomPanel.add(unlockButton);
 
         JButton backButton = new JButton("Back");
-
         bottomPanel.add(backButton);
+        
         backButton.addActionListener(e -> {
-            frame.dispose();  // Close the frame
-            new AdminScreen();  // Open the main menu
+            frame.dispose();  
+            new AdminScreen();  
         });
 
-        // Enable the button if a locked user is selected
+        // Enable/Disable the unlock button
         table.getSelectionModel().addListSelectionListener(event -> {
             if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1) {
                 int selectedRow = table.getSelectedRow();
                 if ("locked".equals(data[selectedRow][2])) {
                     unlockButton.setEnabled(true);
                 } else {
-                    unlockButton.setEnabled(false); // Disable if the user is not locked
+                    unlockButton.setEnabled(false); 
                 }
             }
         });
 
-        // Step 8: Action listener for unlocking the user
+        // Action listener for unlocking
         unlockButton.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
             if (selectedRow != -1) {
-                data[selectedRow][2] = "unlocked";  // Update the status in the data array
-                table.setValueAt("unlocked", selectedRow, 2);  // Update the table view
-                unlockButton.setEnabled(false);  // Disable the button after unlocking
+                data[selectedRow][2] = "unlocked";  
+                table.setValueAt("unlocked", selectedRow, 2);  
+                unlockButton.setEnabled(false);  
 
-                // Optionally, save the change back to the file
-                FileUtil.updateUserStatus(data, "CustomerLogin.txt");  // Persist changes
+                FileUtil.updateUserStatus(data, "CustomerLogin.txt");  
                 JOptionPane.showMessageDialog(frame, "User unlocked successfully!");
             }
         });
@@ -106,11 +108,11 @@ public class ManageCustomers {
         // Add bottom panel to the frame
         frame.add(bottomPanel, BorderLayout.SOUTH);
 
-        // Set up the frame size and visibility
-        frame.setSize(500, 400);
+        // Frame settings
+        frame.setSize(600, 500);
         frame.setTitle("Manage Customers");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationRelativeTo(null);  // Center the frame on the screen
-        frame.setVisible(true);  // Make the frame visible
+        frame.setLocationRelativeTo(null);  
+        frame.setVisible(true);  
     }
 }

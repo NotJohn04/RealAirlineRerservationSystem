@@ -3,12 +3,12 @@ package com.AirlineSystem.app;
 import java.awt.Font;
 import java.awt.event.*;
 import javax.swing.*;
+import java.awt.*;
 
 public class AdminLogin {
 
     JFrame f = new JFrame();
-    JLabel AdminLogin = new JLabel("Admin Login");
-    JLabel title = new JLabel("Login");
+    JLabel AdminLoginTitle = new JLabel("Admin Login");
     JLabel UserName = new JLabel("Username");
     JLabel Password = new JLabel("Password");
 
@@ -17,32 +17,70 @@ public class AdminLogin {
     JButton Login = new JButton("Login");
     JButton Back = new JButton("Back");
 
-    AdminLogin(){
+    AdminLogin() {
 
-        AdminLogin.setBounds(10, 30, 100, 30);
-        AdminLogin.setFont(new Font("Arial", Font.BOLD, 20));
-        f.add(AdminLogin);
+        // Set the background color
+        f.getContentPane().setBackground(new Color(0xF8BBD0)); // Pink background color
+        f.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10); // Padding around elements
+        gbc.anchor = GridBagConstraints.CENTER; // Center everything
 
-        title.setBounds(200, 30, 100, 30);
-        title.setFont(new Font("Arial", Font.BOLD, 20));
-        f.add(title);
+        // Title settings
+        AdminLoginTitle.setFont(new Font("Arial", Font.BOLD, 30));
+        AdminLoginTitle.setForeground(new Color(0xe91e63)); // Dark pink color for title
+        gbc.gridwidth = 2;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        f.add(AdminLoginTitle, gbc);
 
-        UserName.setBounds(100, 100, 100, 30);
-        Password.setBounds(100, 150, 100, 30);
-        InputUserName.setBounds(200, 100, 200, 30);
-        InputPassword.setBounds(200, 150, 200, 30);
-        Login.setBounds(150, 200, 100, 30);
-        Back.setBounds(270, 200, 100, 30);
+        // Username label and input
+        gbc.gridwidth = 1;
+        gbc.gridy = 1;
+        gbc.gridx = 0;
+        UserName.setFont(new Font("Arial", Font.PLAIN, 18));
+        UserName.setForeground(new Color(0xe91e63)); // Dark pink
+        f.add(UserName, gbc);
 
-        f.add(UserName);
-        f.add(InputUserName);
-        f.add(Password);
-        f.add(InputPassword);
-        f.add(Login);
-        f.add(Back);
-        f.setTitle("Login Screen");
+        gbc.gridx = 1;
+        InputUserName.setPreferredSize(new Dimension(200, 30));
+        f.add(InputUserName, gbc);
+
+        // Password label and input
+        gbc.gridy = 2;
+        gbc.gridx = 0;
+        Password.setFont(new Font("Arial", Font.PLAIN, 18));
+        Password.setForeground(new Color(0xe91e63)); // Dark pink
+        f.add(Password, gbc);
+
+        gbc.gridx = 1;
+        InputPassword.setPreferredSize(new Dimension(200, 30));
+        f.add(InputPassword, gbc);
+
+        // Login and Back buttons
+        gbc.gridy = 3;
+        gbc.gridx = 0;
+        Login.setFont(new Font("Arial", Font.PLAIN, 16));
+        Login.setBackground(new Color(0xe91e63)); // Dark pink background
+        Login.setForeground(Color.WHITE); // White text
+        Login.setOpaque(true);
+        Login.setBorderPainted(false);
+        Login.setPreferredSize(new Dimension(100, 30));
+        f.add(Login, gbc);
+
+        gbc.gridx = 1;
+        Back.setFont(new Font("Arial", Font.PLAIN, 16));
+        Back.setBackground(new Color(0xe91e63)); // Dark pink background
+        Back.setForeground(Color.WHITE); // White text
+        Back.setOpaque(true);
+        Back.setBorderPainted(false);
+        Back.setPreferredSize(new Dimension(100, 30));
+        f.add(Back, gbc);
+
+        // Frame settings
+        f.setTitle("Admin Login");
         f.setSize(500, 400);
-        f.setLayout(null);
+        f.setLocationRelativeTo(null);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setVisible(true);
 
@@ -55,37 +93,29 @@ public class AdminLogin {
             }
         });
 
-        // Add action listeners to buttons
         Login.addActionListener(new ActionListener() {
-
             public void actionPerformed(ActionEvent e) {
-
                 String username = InputUserName.getText();
                 String password = new String(InputPassword.getPassword());
 
                 if (FileUtil.checkLocked("AdminLogin.txt", username)) {
                     JOptionPane.showMessageDialog(null, "User is locked, please try again later.");
-                    f.dispose();    
+                    f.dispose();
                     return;
                 }
-                
 
                 if (!FileUtil.checkUser("AdminLogin.txt", username)) {
                     JOptionPane.showMessageDialog(null, "User does not exist");
-
                 }
-                
-                
 
                 if (FileUtil.validateLogin("AdminLogin.txt", username, password)) {
                     JOptionPane.showMessageDialog(null, "Admin Login Successful");
                     new AdminScreen();
                     f.dispose();
-                } 
-                else {
+                } else {
                     count[0]++;
                     JOptionPane.showMessageDialog(null, "Invalid password");
-                    
+
                     if (count[0] == 3) {
                         FileUtil.lockUser("AdminLogin.txt", username);
                         JOptionPane.showMessageDialog(null, "Too many attempts. Please try again later.");
@@ -96,20 +126,7 @@ public class AdminLogin {
         });
     }
 
-    // The addActionListener method is not needed anymore
-    // public void addActionListener(ActionListener e){
-    //     if(e.getSource() == Login){
-    //         System.out.println("Login button clicked");
-    //     }
-    //     else if(e.getSource() == Register){
-    //         System.out.println("Register button clicked");
-    //     }
-    // }
-
-    // This commented out method is also not needed
-    // public void addActionListener(ActionListener e){
-    //     if(e.getSource() == Register){
-    //         System.out.println("Register button clicked");
-    //     }
-    // }
+    public static void main(String[] args) {
+        new AdminLogin();
+    }
 }

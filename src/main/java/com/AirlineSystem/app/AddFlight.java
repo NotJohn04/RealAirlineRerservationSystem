@@ -21,7 +21,7 @@ public class AddFlight {
     private List<JCheckBox> economySeats;
 
     public AddFlight() {
-        // Create a new JFrame with increased size
+        // Create a new JFrame
         JFrame frame = new JFrame("Add Flight Details");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -29,6 +29,9 @@ public class AddFlight {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10);  // Increase padding
         gbc.fill = GridBagConstraints.HORIZONTAL;
+
+        // Set the pink color theme
+        frame.getContentPane().setBackground(new Color(0xF8BBD0));
 
         // Set a larger font for all components
         Font largeFont = new Font("Arial", Font.PLAIN, 16);
@@ -62,18 +65,11 @@ public class AddFlight {
         JLabel flightDurationLabel = new JLabel("Flight Duration:");
         JTextField flightDurationField = new JTextField(20);
 
-        // JLabel seatClassLabel = new JLabel("Seat Class:");
-        // JTextField seatClassField = new JTextField(20);
-
         JLabel economyPriceLabel = new JLabel("Economy Price:");
         JTextField economyPriceField = new JTextField(20);
 
         JLabel businessPriceLabel = new JLabel("Business Price:");
         JTextField businessPriceField = new JTextField(20);
-
-        // Add a new field for flight status
-        // JLabel flightStatusLabel = new JLabel("Flight Status:");
-        // JTextField flightStatusField = new JTextField(20);
 
         // Create checkboxes for business and economy seats
         businessSeats = new ArrayList<>();
@@ -92,9 +88,8 @@ public class AddFlight {
             economySeats.add(seat);
             seatPanel.add(seat);
         }
-        
 
-        // Add components to the frame
+        // Add components to the frame with organized layout
         gbc.gridx = 0;
         gbc.gridy = 0;
         frame.add(flightNumberLabel, gbc);
@@ -143,44 +138,33 @@ public class AddFlight {
         gbc.gridx = 1;
         frame.add(flightDurationField, gbc);
 
-        // gbc.gridx = 0;
-        // gbc.gridy = 9;
-        // frame.add(seatClassLabel, gbc);
-        // gbc.gridx = 1;
-        // frame.add(seatClassField, gbc);
-
         gbc.gridx = 0;
-        gbc.gridy = 10;
+        gbc.gridy = 8;
         frame.add(economyPriceLabel, gbc);
         gbc.gridx = 1;
         frame.add(economyPriceField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 11;
+        gbc.gridy = 9;
         frame.add(businessPriceLabel, gbc);
         gbc.gridx = 1;
         frame.add(businessPriceField, gbc);
 
         gbc.gridx = 0;
-        gbc.gridy = 12;
+        gbc.gridy = 10;
         gbc.gridwidth = 2;
         frame.add(seatPanel, gbc);
 
-        // Adjust the position of other components
-        gbc.gridy = 13;
-        gbc.gridwidth = 2;
-        frame.add(new JLabel(), gbc);  // Empty label to fill the layout gap
-
-        // Create buttons with increased size
+        // Create buttons with consistent size
         JButton saveButton = new JButton("Save");
         JButton backButton = new JButton("Back");
         saveButton.setPreferredSize(new Dimension(120, 40));
         backButton.setPreferredSize(new Dimension(120, 40));
 
-        // Remove duplicate button creation and layout code
-        gbc.gridx = 0;
-        gbc.gridy = 13;
+        // Add buttons at the bottom
+        gbc.gridy = 11;
         gbc.gridwidth = 1;
+        gbc.gridx = 0;
         frame.add(saveButton, gbc);
         gbc.gridx = 1;
         frame.add(backButton, gbc);
@@ -203,6 +187,7 @@ public class AddFlight {
                 flightDuration = flightDurationField.getText();
                 economyPrice = economyPriceField.getText();
                 businessPrice = businessPriceField.getText();
+
                 // Get seat selections
                 StringBuilder seatSelections = new StringBuilder();
                 for (JCheckBox seat : businessSeats) {
@@ -211,6 +196,7 @@ public class AddFlight {
                 for (JCheckBox seat : economySeats) {
                     seatSelections.append(seat.isSelected() ? "1," : "0,");
                 }
+
                 // Remove the trailing comma
                 if (seatSelections.length() > 0) {
                     seatSelections.setLength(seatSelections.length() - 1);

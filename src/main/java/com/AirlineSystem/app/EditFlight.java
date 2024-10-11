@@ -21,7 +21,6 @@ public class EditFlight {
     private List<JCheckBox> economySeats;
 
     public EditFlight(String[] flightDetails) {
-        // Initialize flight details
         this.flightNumber = flightDetails[0];
         this.departure = flightDetails[1];
         this.destination = flightDetails[2];
@@ -33,8 +32,6 @@ public class EditFlight {
         this.economyPrice = flightDetails[8];
         this.businessPrice = flightDetails[9];
 
-
-        // Create a new JFrame with increased size
         JFrame frame = new JFrame("Edit Flight Details");
         frame.setSize(800, 600);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,7 +40,10 @@ public class EditFlight {
         gbc.insets = new Insets(10, 10, 10, 10);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Set a larger font for all components
+        // Apply the pink color theme to the background
+        frame.getContentPane().setBackground(new Color(0xF8BBD0));
+
+        // Set the larger font for all components
         Font largeFont = new Font("Arial", Font.PLAIN, 16);
         UIManager.put("Label.font", largeFont);
         UIManager.put("TextField.font", largeFont);
@@ -81,12 +81,9 @@ public class EditFlight {
         JLabel businessPriceLabel = new JLabel("Business Price:");
         JTextField businessPriceField = new JTextField(businessPrice, 20);
 
-
-
         // Create checkboxes for business and economy seats
         businessSeats = new ArrayList<>();
         economySeats = new ArrayList<>();
-
         JPanel seatPanel = new JPanel(new GridLayout(2, 6, 10, 10));
         seatPanel.add(new JLabel("Business Seats:"));
         for (int i = 1; i <= 5; i++) {
@@ -172,13 +169,12 @@ public class EditFlight {
         gbc.gridx = 1;
         frame.add(businessPriceField, gbc);
 
-
         gbc.gridx = 0;
         gbc.gridy = 11;
         gbc.gridwidth = 2;
         frame.add(seatPanel, gbc);
 
-        // Create buttons with increased size
+        // Create buttons with consistent sizes
         JButton saveButton = new JButton("Save");
         JButton deleteButton = new JButton("Delete");
         JButton backButton = new JButton("Back");
@@ -199,7 +195,7 @@ public class EditFlight {
         // Make the frame visible
         frame.setVisible(true);
 
-        // Add action listener to the save button
+        // Add action listeners to the buttons
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -214,6 +210,7 @@ public class EditFlight {
                 flightDuration = flightDurationField.getText();
                 economyPrice = economyPriceField.getText();
                 businessPrice = businessPriceField.getText();
+
                 // Get seat selections
                 StringBuilder seatSelections = new StringBuilder();
                 for (JCheckBox seat : businessSeats) {
@@ -222,7 +219,7 @@ public class EditFlight {
                 for (JCheckBox seat : economySeats) {
                     seatSelections.append(seat.isSelected() ? "1," : "0,");
                 }
-                // Remove the trailing comma
+
                 if (seatSelections.length() > 0) {
                     seatSelections.setLength(seatSelections.length() - 1);
                 }

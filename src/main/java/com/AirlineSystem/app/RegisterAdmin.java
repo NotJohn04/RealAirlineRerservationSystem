@@ -1,6 +1,6 @@
 package com.AirlineSystem.app;
 
-import java.awt.Font;
+import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -10,46 +10,94 @@ public class RegisterAdmin {
     JLabel title = new JLabel("Register Admin");
     JLabel username = new JLabel("Username");
     JLabel password = new JLabel("Password");
-    JTextField usernameInput = new JTextField();
-    JTextField passwordInput = new JTextField();
+    JTextField usernameInput = new JTextField(15);  // Set preferred size for input fields
+    JPasswordField passwordInput = new JPasswordField(15);  // Use JPasswordField for password
     JButton registerButton = new JButton("Register Admin");
     JButton backButton = new JButton("Back");
 
-    RegisterAdmin(){
+    RegisterAdmin() {
+        // Set the pink background color for the frame
+        frame.getContentPane().setBackground(new Color(0xF8BBD0));
+        frame.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
-        title.setBounds(20, 10, 200, 30); // Adjusted title position and width
-        title.setFont(new Font("Arial", Font.BOLD, 20));
-        frame.add(title);
+        // Title
+        title.setFont(new Font("Arial", Font.BOLD, 24));
+        title.setForeground(new Color(0xe91e63));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;  // Span title across two columns
+        gbc.insets = new Insets(10, 0, 20, 0);  // Add padding
+        gbc.anchor = GridBagConstraints.CENTER;  // Center the title
+        frame.add(title, gbc);
 
-        username.setBounds(20, 50, 100, 30);
-        frame.add(username);    
+        // Username Label
+        username.setFont(new Font("Arial", Font.PLAIN, 16));
+        username.setForeground(new Color(0xe91e63));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 1;  // Reset grid width for next components
+        gbc.anchor = GridBagConstraints.EAST;  // Align to the right of the middle
+        gbc.insets = new Insets(0, 10, 10, 10);  // Adjust spacing
+        frame.add(username, gbc);
 
-        usernameInput.setBounds(130, 50, 200, 30); // Adjusted username input position
-        frame.add(usernameInput);
+        // Username Input
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.WEST;  // Align to the left of the middle
+        gbc.insets = new Insets(0, 0, 10, 10);
+        frame.add(usernameInput, gbc);
 
-        password.setBounds(20, 90, 100, 30); // Adjusted password label position
-        frame.add(password);
+        // Password Label
+        password.setFont(new Font("Arial", Font.PLAIN, 16));
+        password.setForeground(new Color(0xe91e63));
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.insets = new Insets(0, 10, 10, 10);  // Adjust spacing
+        frame.add(password, gbc);
 
-        passwordInput.setBounds(130, 90, 200, 30); // Adjusted password input position
-        frame.add(passwordInput);
+        // Password Input
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(0, 0, 10, 10);
+        frame.add(passwordInput, gbc);
 
-        registerButton.setBounds(130, 130, 100, 30); // Adjusted register button position
-        frame.add(registerButton);
+        // Register Button
+        registerButton.setBackground(new Color(0xe91e63));
+        registerButton.setForeground(Color.WHITE);
+        registerButton.setOpaque(true);
+        registerButton.setBorderPainted(false);
+        registerButton.setFont(new Font("Arial", Font.BOLD, 16));
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 1;
+        gbc.anchor = GridBagConstraints.EAST;
+        gbc.insets = new Insets(20, 0, 0, 10);
+        frame.add(registerButton, gbc);
 
-        backButton.setBounds(240, 130, 100, 30); // Adjusted back button position
-        frame.add(backButton);
+        // Back Button
+        backButton.setBackground(new Color(0xe91e63));
+        backButton.setForeground(Color.WHITE);
+        backButton.setOpaque(true);
+        backButton.setBorderPainted(false);
+        backButton.setFont(new Font("Arial", Font.BOLD, 16));
+        gbc.gridx = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(20, 10, 0, 0);
+        frame.add(backButton, gbc);
 
+        // Frame setup
         frame.setTitle("Admin Register Screen");
-        frame.add(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500,500);
-        frame.setLayout(null);
+        frame.setSize(500, 300);
+        frame.setLocationRelativeTo(null);  // Center the frame on the screen
         frame.setVisible(true);
-    
+
+        // Register button functionality
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String username = usernameInput.getText();
-                String password = passwordInput.getText();
+                String password = new String(passwordInput.getPassword());
 
                 if (!username.matches("^(?=.*[a-zA-Z])(?=.*\\d)[a-zA-Z0-9]+$")) {
                     JOptionPane.showMessageDialog(null, "Username must contain both letters and numbers, and only letters and numbers.");
@@ -60,19 +108,18 @@ public class RegisterAdmin {
                     JOptionPane.showMessageDialog(null, "Password must contain at least one letter, one number, and one special character (@, #, $, etc.).");
                 } 
                 else {
-
                     if (FileUtil.saveUser("AdminLogin.txt", username, password)) {
                         JOptionPane.showMessageDialog(null, "Registration Successful");
-                        new AdminScreen();  // Go back to the login screen
+                        new AdminScreen();
                         frame.dispose();
                     } else {
                         JOptionPane.showMessageDialog(null, "Registration Failed");
                     }
-
                 }
             }
         });
 
+        // Back button functionality
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new AdminScreen();
